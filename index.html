@@ -176,6 +176,60 @@ h3{font-size:1.25rem;font-weight:700}
 .station .si{font-size:1.6rem;line-height:1}
 .station.done{opacity:1;border-color:var(--leaf);background:var(--leaf-soft)}
 .station.here{opacity:1;border-color:var(--sun);background:var(--sun-soft);box-shadow:0 0 0 3px var(--sun-soft)}
+/* home scene */
+.scene{position:relative;border-radius:30px;overflow:hidden;height:min(58vh,540px);min-height:360px;box-shadow:0 10px 30px rgba(90,60,20,.18)}
+.scene-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scene-title{position:absolute;top:18px;inset-inline-end:22px;color:#FFFDF6;font-size:clamp(2rem,6vw,3.2rem);text-shadow:0 3px 0 rgba(120,70,20,.35)}
+.scene-host{position:absolute;bottom:6px;inset-inline:14px}
+.scene-host .buddy img{height:min(30vh,240px)}
+.scene-host .bubble{background:#FFFCF6;color:#2B2620;border-color:#E6DAC4}
+.scene-host .bubble::after{background:#FFFCF6;border-color:#E6DAC4}
+/* wooden doors */
+.doors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.doors{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.door{position:relative;aspect-ratio:3/4;border-radius:90px 90px 14px 14px;border:7px solid #5C3A22;color:#FFF3D6;
+  background:radial-gradient(circle at 14px 14px,#E2B455 3px,transparent 4px) 0 0/28px 28px,linear-gradient(90deg,#7A4A2A,#9A6338 50%,#7A4A2A);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px 8px;box-shadow:0 8px 0 #4A2E1A,0 14px 22px rgba(0,0,0,.18);transition:transform .12s}
+.door:active{transform:translateY(5px);box-shadow:0 3px 0 #4A2E1A}
+.door-face{width:74px;height:74px;border-radius:50%;background:#FFF3D6;display:grid;place-items:center;font-size:2.6rem;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
+.plaque{background:linear-gradient(#F2C14E,#C9932E);color:#3A2600;font-family:var(--display);font-weight:800;font-size:1.45rem;padding:2px 16px;border-radius:10px;border:2px solid #8A5A1E}
+.door-meta{font-weight:700}
+.door-bar{width:70%;height:8px;border-radius:9px;background:rgba(0,0,0,.3);overflow:hidden}.door-bar i{display:block;height:100%;background:#F2C14E}
+.grove-note{margin:0;text-align:center;font-weight:700;color:var(--muted)}
+/* child top + map */
+.topbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.kid-chip{font-family:var(--display);font-weight:800;font-size:1.3rem;padding:6px 16px;border-radius:999px;color:var(--ink)}
+.map-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.map{position:relative;border-radius:30px;overflow:hidden;box-shadow:0 10px 30px rgba(90,60,20,.18)}
+.zone{position:absolute;inset-inline:0}
+.zone-fareej{background:linear-gradient(#F6E6C7,#F1DDB5)}
+.zone-souq{background:repeating-linear-gradient(135deg,#F3D6A8 0 22px,#F0CF9C 22px 44px)}
+.zone-sea{background:repeating-linear-gradient(170deg,#9FD6E6 0 26px,#B6E1EC 26px 52px)}
+.zone-barr{background:radial-gradient(ellipse 60% 18% at 20% 30%,#E8BD7C,transparent),radial-gradient(ellipse 55% 16% at 80% 70%,#E8BD7C,transparent),#F0CE93}
+.zone-sign{position:absolute;top:16px;inset-inline-start:16px;background:#7A4A2A;color:#FFF3D6;font-family:var(--display);font-weight:800;font-size:1.3rem;padding:4px 16px;border-radius:10px;border:3px solid #5C3A22;box-shadow:0 4px 0 #4A2E1A;z-index:1}
+.deco{position:absolute;width:min(26%,170px);height:auto;opacity:.95}.deco.l{left:1%}.deco.r{right:1%}
+.deco.emo{font-size:3.2rem;width:auto}
+.trail{position:absolute;inset:0;width:100%;height:100%}
+.stone{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2}
+.stone .dot{width:66px;height:66px;border-radius:50%;background:#FFFCF5;border:5px solid #C7A673;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.35rem;color:#5C3A22;box-shadow:0 6px 0 rgba(90,60,20,.25)}
+.stone.mem .dot{background:#2E7D5B;border-color:#1F5C42;color:#fff}
+.stone.weak .dot{border-color:#B5473A;box-shadow:0 0 0 5px rgba(181,71,58,.25),0 6px 0 rgba(90,60,20,.25)}
+.stone.here .dot{background:#F2C14E;border-color:#B47F22;animation:glow 1.6s ease-in-out infinite}
+.stone .lbl{background:rgba(255,252,245,.95);color:#2B2620;padding:2px 12px;border-radius:999px;font-weight:700;font-size:1rem;white-space:nowrap}
+.stone .me{position:absolute;top:-50px;font-size:2.2rem;animation:hop 1.4s ease-in-out infinite}
+.chest{position:absolute;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;font-family:var(--display);color:#5C3A22;z-index:2}
+.chest span{font-size:4rem;line-height:1}.chest.won span{animation:hop 1.2s infinite}
+@keyframes glow{50%{box-shadow:0 0 0 12px rgba(242,193,78,.35),0 6px 0 rgba(90,60,20,.25)}}
+/* talking + voice panel */
+.buddy.talking img{animation:talk .32s ease-in-out infinite}
+.buddy.talking .bubble{border-color:var(--sun);box-shadow:0 0 0 3px var(--sun-soft)}
+@keyframes talk{50%{transform:translateY(-5px) rotate(-1.5deg)}}
+.vlines{display:flex;flex-direction:column;gap:10px}
+.vline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--bg);border-radius:16px;padding:8px 12px}
+.vline img{height:56px;width:auto}
+.vt{flex:1;min-width:160px;display:flex;flex-direction:column}
+.vbtns{display:flex;gap:6px;flex-wrap:wrap}
+.vbtns .btn{min-height:46px;font-size:1rem;padding:6px 14px}
 /* celebration */
 .toast{position:fixed;inset-inline:0;bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;pointer-events:none;z-index:20}
 .toast div{background:var(--ink);color:var(--bg);padding:12px 22px;border-radius:999px;font-family:var(--display);font-size:1.2rem;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:pop .3s}
@@ -314,10 +368,12 @@ function tick(tok){
 
 /* ---------- routing ---------- */
 let view={name:"home"};
-function go(v){stopAudio(); clearTimeout(listen.timer); view=v; render(); window.scrollTo(0,0)}
+function go(v){stopAudio(); clearTimeout(listen.timer); view=v; render(); window.scrollTo(0,0);
+  if(v.name==="home") speak("home_hello","hbuddy"); else if(v.name==="child") speak("child_hello","cbuddy");
+  if(v.name==="child"){const h=document.querySelector(".stone.here"); if(h) setTimeout(()=>h.scrollIntoView({block:"center",behavior:"smooth"}),400)}}
 function render(){
   const app=$("#app");
-  if(view.name==="home") app.innerHTML='<div class="sadu" aria-hidden="true"></div>'+homeHTML();
+  if(view.name==="home") app.innerHTML=homeHTML();
   else if(view.name==="child") app.innerHTML=childHTML(view.kid);
   else if(view.name==="surah") app.innerHTML=surahHTML(view);
   else if(view.name==="game") app.innerHTML=gameHTML();
@@ -330,61 +386,154 @@ const CHARS={fatima:"فاطمة",abdulrahman:"عبدالرحمن",yaddo:"الي�
 function buddy(who,text,opts={}){return `<div class="buddy ${opts.small?"small":""} ${opts.mood||""}" ${opts.id?`id="${opts.id}"`:""}><img src="chars/${who}.png" alt="${CHARS[who]}"><div class="bubble" ${opts.bid?`id="${opts.bid}" aria-live="polite"`:""}>${text}</div></div>`}
 function setMood(id,mood,text){const b=document.getElementById(id); if(!b) return; b.classList.remove("cheer","think"); void b.offsetWidth; if(mood) b.classList.add(mood); if(text!=null){const t=b.querySelector(".bubble"); if(t) t.textContent=text}}
 
+/* ---------- scene drawing (Emirati fareej world) ---------- */
+function svgHouse(x,y,w,h,tower){
+  const door=`<rect x="${x+w*0.4}" y="${y+h*0.45}" width="${w*0.2}" height="${h*0.55}" rx="${w*0.1}" fill="#7A4A2A"/><circle cx="${x+w*0.45}" cy="${y+h*0.72}" r="2" fill="#E9B44C"/><circle cx="${x+w*0.55}" cy="${y+h*0.72}" r="2" fill="#E9B44C"/>`;
+  const win=(wx)=>`<path d="M${wx} ${y+h*0.55} v-${h*0.18} a${w*0.07} ${w*0.07} 0 0 1 ${w*0.14} 0 v${h*0.18} z" fill="#5D7F86"/>`;
+  const tw=tower?`<rect x="${x+w*0.62}" y="${y-h*0.55}" width="${w*0.26}" height="${h*0.58}" fill="#E6CB9C" stroke="#C7A673" stroke-width="2"/><rect x="${x+w*0.66}" y="${y-h*0.48}" width="${w*0.04}" height="${h*0.36}" fill="#8C6A44"/><rect x="${x+w*0.73}" y="${y-h*0.48}" width="${w*0.04}" height="${h*0.36}" fill="#8C6A44"/><rect x="${x+w*0.80}" y="${y-h*0.48}" width="${w*0.04}" height="${h*0.36}" fill="#8C6A44"/><rect x="${x+w*0.6}" y="${y-h*0.6}" width="${w*0.3}" height="${h*0.07}" fill="#D9BB86"/>`:"";
+  return `<g>${tw}<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#EBD4A8" stroke="#C7A673" stroke-width="2"/><rect x="${x-4}" y="${y-6}" width="${w+8}" height="10" fill="#DCC08D"/>${win(x+w*0.12)}${win(x+w*0.74)}${door}</g>`;
+}
+function svgPalm(x,y,s){
+  s=s||1; const t=`<path d="M${x} ${y} q${-6*s} ${-50*s} ${4*s} ${-100*s}" stroke="#8A6239" stroke-width="${9*s}" fill="none" stroke-linecap="round"/>`;
+  const f=(dx,dy,c)=>`<path d="M${x+4*s} ${y-100*s} q${dx*0.5} ${dy-25*s} ${dx} ${dy}" stroke="${c}" stroke-width="${7*s}" fill="none" stroke-linecap="round"/>`;
+  return `<g>${t}${f(-55*s,10*s,"#3E8E5A")}${f(55*s,12*s,"#3E8E5A")}${f(-40*s,-25*s,"#4FA56B")}${f(42*s,-22*s,"#4FA56B")}${f(-8*s,-45*s,"#5DB878")}<circle cx="${x+2*s}" cy="${y-96*s}" r="${6*s}" fill="#C47F2C"/></g>`;
+}
+function svgDhow(x,y,s){s=s||1;return `<g><path d="M${x-45*s} ${y} q${45*s} ${22*s} ${95*s} 0 l-${10*s} ${14*s} h-${75*s} z" fill="#8A5A3B"/><path d="M${x} ${y-4*s} l0 -${70*s} l${48*s} ${62*s} z" fill="#FFF7E6" stroke="#D8C7A6" stroke-width="2"/><line x1="${x}" y1="${y}" x2="${x}" y2="${y-74*s}" stroke="#5C3D26" stroke-width="${3*s}"/></g>`}
+function svgStall(x,y,s,c){s=s||1;c=c||"#B5473A";let stripes="";for(let i=0;i<5;i++)stripes+=`<path d="M${x+i*16*s} ${y} h${16*s} l-${3*s} ${16*s} h-${10*s} z" fill="${i%2?"#FFF7E6":c}"/>`;return `<g><rect x="${x+4*s}" y="${y+14*s}" width="${72*s}" height="${44*s}" fill="#E9D2A6" stroke="#C7A673" stroke-width="2"/>${stripes}<circle cx="${x+22*s}" cy="${y+38*s}" r="${7*s}" fill="#E39B3A"/><circle cx="${x+40*s}" cy="${y+40*s}" r="${7*s}" fill="#9C6B3C"/><circle cx="${x+58*s}" cy="${y+38*s}" r="${7*s}" fill="#C9932E"/></g>`}
+function svgTent(x,y,s){s=s||1;return `<g><path d="M${x} ${y} l${55*s} -${48*s} l${55*s} ${48*s} z" fill="#2B2620"/><path d="M${x+18*s} ${y} l${37*s} -${32*s} l${37*s} ${32*s}" fill="none" stroke="#B5473A" stroke-width="${5*s}"/><path d="M${x+45*s} ${y} l${10*s} -${20*s} l${10*s} ${20*s} z" fill="#F3E6CC"/></g>`}
+
+function homeScene(palms){
+  let grove=""; const spots=[[880,470,.8],[930,480,.7],[835,485,.65],[975,470,.6],[790,478,.55],[910,500,.5],[860,505,.5],[950,505,.45]];
+  for(let i=0;i<Math.min(palms,spots.length);i++){const [x,y,s]=spots[i]; grove+=svgPalm(x,y,s)}
+  return `<svg class="scene-svg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7CC6DE"/><stop offset=".75" stop-color="#FBE6BF"/></linearGradient></defs>
+  <rect width="1000" height="560" fill="url(#sky)"/>
+  <circle cx="820" cy="105" r="58" fill="#FFD36B"/><circle cx="820" cy="105" r="78" fill="#FFD36B" opacity=".25"/>
+  <g fill="#fff" opacity=".85"><ellipse cx="180" cy="90" rx="60" ry="18"/><ellipse cx="220" cy="78" rx="40" ry="16"/><ellipse cx="560" cy="60" rx="50" ry="14"/></g>
+  <rect y="292" width="1000" height="50" fill="#3A9DB5"/><path d="M0 305 h1000 M0 322 h1000" stroke="#7FC8DA" stroke-width="3" stroke-dasharray="28 22"/>
+  ${svgDhow(130,300,.8)}
+  <path d="M0 345 q160 -55 330 -8 q170 -40 340 4 q170 -50 330 -6 v225 h-1000 z" fill="#E8C58E"/>
+  ${svgHouse(330,300,150,110,true)}${svgHouse(500,320,120,95,false)}${svgHouse(640,290,140,120,true)}
+  ${svgPalm(300,420,.9)}${svgPalm(790,420,.75)}
+  <rect y="430" width="1000" height="130" fill="#F1DDB5"/><path d="M0 430 q250 -14 500 0 t500 0" fill="#EAD2A3"/>
+  ${grove}
+  </svg>`;
+}
+
+/* ---------- character voices (recorded by the family) ---------- */
+const VOICE_LINES=[
+  ["home_hello","yaddoah","هلا والله بعيالي! منو بتراجع اليوم؟"],
+  ["child_hello","fatima","هلا! يلا نراجع سوا"],
+  ["listen_start","fatima","اسمعي الآية زين، وبعدين ردّديها"],
+  ["listen_done","fatima","ما شاء الله عليج، خلّصتي السورة!"],
+  ["story_intro","yaddo","تعالي يا بنتي، أقولج قصة هالسورة"],
+  ["game_start","abdulrahman","أتحداج! يلا نشوف"],
+  ["game_right","abdulrahman","كفو!"],
+  ["game_wrong","abdulrahman","ولا يهمج، نحاول مرة ثانية"],
+  ["game_end","abdulrahman","شطورة! خذي نجومج"],
+  ["prize","yaddoah","مبروك يا بنتي، الجائزة لج!"],
+];
+let VDBP=null;
+function vdb(){return VDBP||(VDBP=new Promise((res,rej)=>{try{const r=indexedDB.open("bustan-voices",1);r.onupgradeneeded=()=>r.result.createObjectStore("v");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}}))}
+async function vOp(mode,fn){try{const db=await vdb();return await new Promise(r=>{const tx=db.transaction("v",mode);const q=fn(tx.objectStore("v"));q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)})}catch(e){return null}}
+const vGet=id=>vOp("readonly",s=>s.get(id));
+const vPut=(id,b)=>vOp("readwrite",s=>s.put(b,id));
+const vDel=id=>vOp("readwrite",s=>s.delete(id));
+let VOICES=new Set();
+vOp("readonly",s=>s.getAllKeys()).then(k=>{if(k) VOICES=new Set(k)});
+let voiceEl=null;
+async function speak(id,buddyId,after){
+  const done=()=>{const b=document.getElementById(buddyId); if(b) b.classList.remove("talking"); if(after) after()};
+  if(!VOICES.has(id)||(!player.paused&&stopAt!=null)){ if(after) after(); return }
+  const blob=await vGet(id); if(!blob){ if(after) after(); return }
+  try{ if(voiceEl){voiceEl.pause()} voiceEl=new Audio(URL.createObjectURL(blob));
+    const b=document.getElementById(buddyId); if(b) b.classList.add("talking");
+    voiceEl.onended=done; voiceEl.onerror=done;
+    const p=voiceEl.play(); if(p&&p.catch) p.catch(done);
+  }catch(e){done()}
+}
+let REC=null;
+async function toggleRecord(id,btn){
+  if(REC&&REC.id===id){REC.mr.stop(); return}
+  if(REC) return;
+  if(!navigator.mediaDevices||!window.MediaRecorder){toast("التسجيل يشتغل من رابط الموقع في Safari"); return}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    const mr=new MediaRecorder(stream); const chunks=[];
+    mr.ondataavailable=e=>{if(e.data.size) chunks.push(e.data)};
+    mr.onstop=async()=>{stream.getTracks().forEach(t=>t.stop()); const blob=new Blob(chunks,{type:mr.mimeType||"audio/mp4"}); await vPut(id,blob); VOICES.add(id); REC=null; toast("انحفظ الصوت ✓"); render()};
+    REC={id,mr}; mr.start(); btn.textContent="⏹ وقّفي"; btn.classList.add("rose");
+  }catch(e){REC=null; toast("ما قدرنا نفتح المايك. اسمحي للموقع يستخدمه")}
+}
+
 /* ---------- home ---------- */
 function homeHTML(){
   const total=KIDS.reduce((a,k)=>a+S.kids[k.id].stars,0);
-  const flowers=Math.min(60,Math.floor(total/3)); const fl=["🌴","🌷","🌼","🌴","🌸","🌻"];
-  let bed=""; for(let i=0;i<flowers;i++) bed+=fl[i%fl.length];
+  const palms=Math.floor(total/5);
   return `
-  <header class="hero"><h1>بستان القرآن</h1></header>
-  ${buddy("yaddoah","هلا والله بعيالي! منو بتراجع اليوم؟ اختاري صورتج")}
-  <section class="kids">${KIDS.map(k=>{const st=S.kids[k.id]; const pct=Math.round(memCount(k.id)/goalTotal(k.id)*100);
-    return `<button class="kid" data-kid="${k.id}" aria-label="${k.name}">
-      <span class="avatar" style="background:${k.tint}">${k.emoji}</span>
-      <span style="flex:1;min-width:0"><span class="name">${k.name}</span>
-        <span class="meta" style="display:block">${LEVELS[st.level]} · ⭐ ${ar(st.stars)}</span>
-        <span class="minibar" style="display:block" aria-hidden="true"><i style="width:${pct}%"></i></span></span></button>`}).join("")}
+  <section class="scene">
+    ${homeScene(palms)}
+    <h1 class="scene-title">بستان القرآن</h1>
+    <div class="scene-host">${buddy("yaddoah","هلا والله بعيالي! منو بتراجع اليوم؟",{id:"hbuddy"})}</div>
   </section>
-  <section class="garden"><h3>حديقة البيت</h3>
-    <p class="note">كل ٣ نجوم تجمعها أي وحدة منكن تزرع وردة. الحديقة لكن كلكن.</p>
-    <div class="beds" aria-label="${ar(flowers)} وردة">${bed||'<span class="muted" style="font-size:1rem">الحديقة تنتظر أول وردة 🌱</span>'}</div>
+  <section class="doors">${KIDS.map(k=>{const st=S.kids[k.id]; const pct=Math.round(memCount(k.id)/goalTotal(k.id)*100);
+    return `<button class="door" data-kid="${k.id}" aria-label="${k.name}">
+      <span class="door-face">${k.emoji}</span>
+      <span class="plaque">${k.name}</span>
+      <span class="door-meta">⭐ ${ar(st.stars)}</span>
+      <span class="door-bar" aria-hidden="true"><i style="width:${pct}%"></i></span></button>`}).join("")}
   </section>
+  <p class="grove-note">🌴 نخل البيت: ${ar(palms)} ${palms?"":"· كل ٥ نجوم تزرع نخلة في الفريج"}</p>
   <button class="btn soft parent-btn" id="parentHold"><span class="fill"></span><span>لوحة الأم · اضغطي مطوّلًا</span></button>`;
 }
 
-/* ---------- child ---------- */
+/* ---------- child: adventure map ---------- */
 function nextToLearn(kid){const st=S.kids[kid.id]; return kidList(kid).goal.find(n=>!st.mem[n])}
+const ZONES=[["الفريج","fareej"],["السوق","souq"],["البحر","sea"],["البر","barr"]];
+function mapHTML(kid){
+  const st=S.kids[kid.id]; const list=kidList(kid).goal; const N=list.length; const GAP=118, TOP=120;
+  const H=TOP+N*GAP+150; const nxt=nextToLearn(kid);
+  const pos=i=>({x:50+30*Math.sin(i*0.85), y:TOP+i*GAP});
+  const zoneOf=i=>Math.min(3,Math.floor(i/N*4));
+  let bands=""; for(let z=0;z<4;z++){const y0=z===0?0:TOP+Math.ceil(z*N/4)*GAP-GAP/2; const y1=z===3?H:TOP+Math.ceil((z+1)*N/4)*GAP-GAP/2;
+    bands+=`<div class="zone zone-${ZONES[z][1]}" style="top:${y0}px;height:${y1-y0}px"><span class="zone-sign">${ZONES[z][0]}</span>${zoneDeco(z,y1-y0)}</div>`}
+  const pts=list.map((_,i)=>{const p=pos(i);return `${p.x},${p.y}`}).join(" ")+` 50,${TOP+N*GAP+40}`;
+  const nodes=list.map((n,i)=>{const p=pos(i); const m=st.mem[n], w=weakCount(kid.id,n)>0, here=n===nxt;
+    return `<button class="stone ${m?"mem":""} ${w?"weak":""} ${here?"here":""}" data-surah="${n}" style="left:${p.x}%;top:${p.y}px" aria-label="سورة ${sname(n)}">
+      ${here?`<span class="me">${kid.emoji}</span>`:""}<span class="dot">${m?"✓":ar(i+1)}</span><span class="lbl">${sname(n)}</span></button>`}).join("");
+  const won=memCount(kid.id)>=goalTotal(kid.id);
+  return `<section class="map" style="height:${H}px">${bands}
+    <svg class="trail" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="#FFF6E3" stroke-width="14" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/><polyline points="${pts}" fill="none" stroke="#C7A673" stroke-width="3" stroke-dasharray="2 12" vector-effect="non-scaling-stroke" stroke-linecap="round"/></svg>
+    ${nodes}
+    <div class="chest ${won?"won":""}" style="top:${TOP+N*GAP+10}px"><span>🎁</span><b>${won?"الجائزة لج!":"الجائزة الكبرى"}</b></div>
+  </section>`;
+}
+function zoneDeco(z,h){
+  const reps=Math.max(1,Math.floor(h/360)); let out="";
+  for(let r=0;r<reps;r++){const y=40+r*360;
+    if(z===0) out+=`<svg class="deco l" style="top:${y}px" viewBox="0 0 220 200">${svgHouse(20,80,150,110,true)}</svg><svg class="deco r" style="top:${y+170}px" viewBox="0 0 160 160">${svgPalm(80,150,1)}</svg>`;
+    if(z===1) out+=`<svg class="deco r" style="top:${y}px" viewBox="0 0 100 80">${svgStall(10,10,1,"#B5473A")}</svg><svg class="deco l" style="top:${y+180}px" viewBox="0 0 100 80">${svgStall(10,10,1,"#2F7F95")}</svg>`;
+    if(z===2) out+=`<svg class="deco l" style="top:${y+20}px" viewBox="0 0 160 110">${svgDhow(70,90,1)}</svg><span class="deco r emo" style="top:${y+200}px">🐚</span>`;
+    if(z===3) out+=`<svg class="deco r" style="top:${y}px" viewBox="0 0 130 70">${svgTent(10,60,1)}</svg><span class="deco l emo" style="top:${y+170}px">🐪</span>`;
+  }
+  return out;
+}
 function childHTML(id){
   const kid=kidById(id), st=S.kids[id]; const lists=kidList(kid);
-  const done=memCount(id), tot=goalTotal(id), pct=Math.round(done/tot*100), won=done>=tot;
-  const nxt=nextToLearn(kid);
+  const done=memCount(id), tot=goalTotal(id), won=done>=tot; const nxt=nextToLearn(kid);
   const actions=[];
-  if(st.level<=2 && nxt) actions.push(`<button class="action" data-surah="${nxt}"><span class="ic">🎧</span><span><b>سورة اليوم: ${sname(nxt)}</b><small>اسمعي وردّدي</small></span></button>`);
-  if(st.level>=2) actions.push(`<button class="action" data-daily="1"><span class="ic">🌤️</span><span><b>ورد اليوم</b><small>٥ أسئلة مراجعة قصيرة</small></span></button>`);
+  if(st.level>=2) actions.push(`<button class="action" data-daily="1"><span class="ic">🌤️</span><span><b>ورد اليوم</b><small>٥ أسئلة مراجعة</small></span></button>`);
   if(st.level>=3) actions.push(`<button class="action" data-game="after"><span class="ic">🧭</span><span><b>شو السورة اللي بعدها؟</b><small>ترتيب السور</small></span></button>`);
-  if(id==="fatima") actions.push(`<button class="action" data-helper="1" style="background:var(--sun-soft)"><span class="ic">🤝</span><span><b>سمّعي لأخواتك</b><small>أنتِ المسمّعة اليوم</small></span></button>`);
-  const tile=n=>{const m=st.mem[n], w=weakCount(id,n)>0; const cls=m?"mem":(n===nxt&&st.level<=2?"next":"");
-    return `<button class="st ${cls} ${w?"weak":""}" data-surah="${n}"><span class="sn">${sname(n)}</span><span class="badge">${m?"✓ محفوظة":(w?"تحتاج مراجعة":ar(QURAN[n].v.length)+" آيات")}</span></button>`};
-  const STN=[["🏠","الفريج"],["🏪","السوق"],["⛵","البحر"],["🐪","البر"],["🎁","الجائزة"]];
-  const stIdx=won?4:Math.min(3,Math.floor(done/tot*4));
-  const greet=won?`ما شاء الله يا ${kid.name}! وصلتي للجائزة الكبرى 🎉`:(st.level<=2&&nxt?`هلا ${kid.name}! يلا نسمع سورة ${sname(nxt)} سوا`:`هلا ${kid.name}! جاهزة نراجع اليوم؟`);
+  if(id==="fatima") actions.push(`<button class="action" data-helper="1"><span class="ic">🤝</span><span><b>سمّعي لأخواتك</b><small>أنتِ المسمّعة اليوم</small></span></button>`);
+  const greet=won?`ما شاء الله يا ${kid.name}! وصلتي للجائزة الكبرى 🎉`:(nxt?`هلا ${kid.name}! محطتج الجاية سورة ${sname(nxt)}، يلا نمشي لها`:`هلا ${kid.name}!`);
+  const tile=n=>{const m=st.mem[n], w=weakCount(id,n)>0; return `<button class="st ${m?"mem":""} ${w?"weak":""}" data-surah="${n}"><span class="sn">${sname(n)}</span><span class="badge">${m?"✓ محفوظة":(w?"تحتاج مراجعة":ar(QURAN[n].v.length)+" آيات")}</span></button>`};
   return `
-  <div class="sadu" aria-hidden="true"></div>
-  <div class="row"><button class="back" data-home>→ رجوع</button></div>
-  <header class="childhead"><span class="avatar" style="background:${kid.tint};width:72px;height:72px;font-size:2.4rem">${kid.emoji}</span>
-    <div><h2>${kid.name}</h2><span class="muted">${LEVELS[st.level]}</span></div><span class="spacer"></span><span class="stars">⭐ ${ar(st.stars)}</span></header>
-  <section class="prize">
-    <div class="row"><h3>الطريق إلى الجائزة الكبرى</h3><span class="spacer"></span><span class="muted">${GOALS[st.goal].name}: ${ar(done)} من ${ar(tot)}</span></div>
-    <div class="track" role="progressbar" aria-valuenow="${done}" aria-valuemax="${tot}"><i style="width:${pct}%"></i><span class="ipad ${won?"won":""}" aria-hidden="true">${won?"🎁":"🔒"}</span></div>
-    <div class="stations">${STN.map(([i,l],k)=>`<div class="station ${k<stIdx||won?"done":""} ${k===stIdx&&!won?"here":""}"><span class="si">${i}</span>${l}</div>`).join("")}</div>
-    <p class="note">${won?"ما شاء الله! خلّصتِ "+GOALS[st.goal].name+". الآيباد جائزتج 🎉":"محطتج الحين: "+STN[stIdx][1]+". كل سورة تسمّعينها لماما تقرّبج من الآيباد."}</p>
-  </section>
-  ${buddy(st.level<=2?"fatima":"abdulrahman",greet)}
+  <header class="topbar"><button class="back" data-home>→ البيت</button><span class="kid-chip" style="background:${kid.tint}">${kid.emoji} ${kid.name}</span><span class="spacer"></span><span class="stars">⭐ ${ar(st.stars)}</span></header>
+  ${buddy(st.level<=2?"fatima":"abdulrahman",greet,{id:"cbuddy"})}
   ${actions.length?`<section class="todo">${actions.join("")}</section>`:""}
-  <section style="display:flex;flex-direction:column;gap:12px">
-    <div class="sec-title"><h3>${st.goal==="amma"?"الفاتحة وجزء عمّ":"الفاتحة وجزء تبارك"}</h3></div>
-    <div class="surahs">${lists.goal.map(tile).join("")}</div>
-  </section>
+  <div class="sadu" aria-hidden="true"></div>
+  <div class="map-head"><h3>رحلة ${GOALS[st.goal].name}</h3><span class="muted">${ar(done)} من ${ar(tot)} · الجائزة في آخر الطريق</span></div>
+  ${mapHTML(kid)}
   ${st.level>=3?`<section style="display:flex;flex-direction:column;gap:12px"><h3>${st.goal==="amma"?"جزء تبارك":"جزء عمّ"}</h3><div class="surahs">${lists.other.map(tile).join("")}</div></section>`:""}`;
 }
 
@@ -407,7 +556,7 @@ function surahHTML(v){
     <p class="note">اضغطي على أي آية لتسمعيها وحدها.</p>`;
   } else if(tab==="story"){
     const s=STORIES[n];
-    body=`${buddy("yaddo",`تعالي يا بنتي، أقولج قصة سورة ${q.name}`)}<article class="story">${s.story.map(p=>`<p>${esc(p)}</p>`).join("")}
+    body=`${buddy("yaddo",`تعالي يا بنتي، أقولج قصة سورة ${q.name}`,{id:"sbuddy"})}<article class="story">${s.story.map(p=>`<p>${esc(p)}</p>`).join("")}
       <h3>كلمات جديدة</h3><div class="words">${s.words.map(([w,m])=>`<div class="word"><div class="w">${esc(w)}</div><div>${esc(m)}</div></div>`).join("")}</div>
       <div class="lesson">🌱 ${esc(s.lesson)}</div></article>`;
   } else {
@@ -415,7 +564,7 @@ function surahHTML(v){
     g.push(["order","رتّبي الآيات","المسي الآيات بالترتيب الصحيح"]);
     g.push(["which","وين السورة؟","اسمعي آية واختاري سورتها"]);
     if(st.level>=3){ g.unshift(["complete","أكملي الآية","اختاري تكملة الآية"]); g.push(["recite","التسميع","اقرئي الآية اللي بعدها"]) }
-    body=`${buddy("abdulrahman","يلا نلعب! اختاري لعبة وأتحداج 😄",{small:true})}<div class="games">${g.map(([id,t,d])=>`<button class="game" data-game="${id}" data-n="${n}"><b>${t}</b><small>${d}</small></button>`).join("")}</div>`;
+    body=`${buddy("abdulrahman","يلا نلعب! اختاري لعبة وأتحداج 😄",{small:true,id:"pbuddy"})}<div class="games">${g.map(([id,t,d])=>`<button class="game" data-game="${id}" data-n="${n}"><b>${t}</b><small>${d}</small></button>`).join("")}</div>`;
   }
   return `
   <div class="row"><button class="back" data-kid="${kid.id}">→ ${kid.name}</button><span class="spacer"></span><span class="stars">⭐ ${ar(st.stars)}</span></div>
@@ -429,7 +578,7 @@ const listen={on:false, rep:3, ayah:1, count:0, timer:null};
 function listenStop(){listen.on=false; clearTimeout(listen.timer); stopAudio(); document.querySelectorAll(".ayah.on").forEach(e=>e.classList.remove("on"))}
 function listenStep(){
   if(!listen.on) return; const n=view.n, q=QURAN[n];
-  if(listen.ayah>q.v.length){ listenStop(); const st=S.kids[view.kid]; st.listened[n]=(st.listened[n]||0)+1; addStars(view.kid,1); toast("ما شاء الله! ⭐ نجمة جديدة"); render(); setMood("lbuddy","cheer","ما شاء الله عليج! خلّصتي السورة ⭐"); return }
+  if(listen.ayah>q.v.length){ listenStop(); const st=S.kids[view.kid]; st.listened[n]=(st.listened[n]||0)+1; addStars(view.kid,1); toast("ما شاء الله! ⭐ نجمة جديدة"); render(); setMood("lbuddy","cheer","ما شاء الله عليج! خلّصتي السورة ⭐"); speak("listen_done","lbuddy"); return }
   document.querySelectorAll(".ayah").forEach(e=>e.classList.toggle("on",+e.dataset.ayah===listen.ayah));
   const el=document.querySelector(`.ayah[data-ayah="${listen.ayah}"]`); if(el) el.scrollIntoView({block:"center",behavior:"smooth"});
   setMood("lbuddy","think","اسمعي… 👂");
@@ -446,7 +595,7 @@ function startGame(type,n,opts={}){
   stopAudio();
   G={type, n, kid:opts.evalFor||view.kid, by:view.kid, i:0, total:5, score:[], back:{...view}, daily:!!opts.daily};
   if(type==="order") G.total=1;
-  nextQ(); view={name:"game"}; render();
+  nextQ(); view={name:"game"}; render(); speak("game_start","gbuddy");
 }
 function weightedAyah(kid,n){const q=QURAN[n]; const w=S.kids[kid].weak; const weak=[]; for(let i=1;i<=q.v.length;i++) if(w[n+":"+i]) weak.push(i); return (weak.length&&Math.random()<.6)?pick(weak):1+(Math.random()*q.v.length|0)}
 function nextQ(){
@@ -506,6 +655,7 @@ function gameHTML(){
 }
 function answer(ok){
   const c=G.cur; G.score[G.i]=ok;
+  speak(ok?"game_right":"game_wrong","gbuddy");
   setMood("gbuddy",ok?"cheer":"think",ok?pick(["كفو! ⭐","ما شاء الله عليج!","شطورة! 👏"]):pick(["ولا يهمج، نحاول مرة ثانية","قريبة! نعيدها سوا","أنا بعد أغلط أحيانًا 😅"]));
   if(!ok && c.a) { const w=S.kids[G.kid].weak; const k=c.n+":"+(c.t==="recite"?c.a+1:c.a); w[k]=(w[k]||0)+1; save() }
   if(ok && c.a && c.t==="recite"){ const w=S.kids[G.kid].weak; const k=c.n+":"+(c.a+1); if(w[k]){w[k]--; if(!w[k]) delete w[k]; save()} }
@@ -517,7 +667,7 @@ function finishGame(){
   if(stars) addStars(G.kid,stars);
   if(G.kid!==G.by && stars) addStars(G.by,1);
   toast(stars?`${"⭐".repeat(stars)} أحسنتِ!`:"نحاول مرة ثانية 💪");
-  const b=G.back; G=null; view=b; render();
+  const b=G.back; G=null; view=b; render(); speak("game_end",view.name==="child"?"cbuddy":"pbuddy");
 }
 
 /* ---------- parent ---------- */
@@ -543,6 +693,11 @@ function parentHTML(){
     ${weakList.length?`<div class="chips">${weakList.map(([k,c])=>{const [n,a]=k.split(":");return `<span class="chip weakc">${sname(+n)} · آية ${ar(a)} (${ar(c)})</span>`}).join("")}</div>
       <p class="note">هذي الآيات تطلع لها أكثر في الألعاب والتسميع لين تثبت.</p>`:`<p class="note">ما فيه آيات متعثّرة إلى الحين.</p>`}
   </section>
+  <section class="panel"><h3>أصوات الشخصيات</h3>
+    <p class="note">سجّلي كل جملة بصوت طفل أو طفلة باللهجة. الصوت ينحفظ على هالآيباد، والشخصية تقوله في مكانه داخل التطبيق.</p>
+    <div class="vlines">${VOICE_LINES.map(([id,who,t])=>`<div class="vline"><img src="chars/${who}.png" alt="${CHARS[who]}"><div class="vt"><b>${CHARS[who]}</b><span>${t}</span></div>
+      <div class="vbtns"><button class="btn ${VOICES.has(id)?"soft":""}" data-rec="${id}">${VOICES.has(id)?"🎙 أعيدي":"🎙 سجّلي"}</button>${VOICES.has(id)?`<button class="btn soft" data-vplay="${id}" aria-label="اسمعي">▶</button><button class="btn ghost" data-vdel="${id}">حذف</button>`:""}</div></div>`).join("")}</div>
+  </section>
   <section class="panel"><h3>للأم</h3>
     <p class="note">التلاوة بصوت الشيخ محمود خليل الحصري (المصحف المعلّم). النص بالرسم العثماني. القصص ومعاني الكلمات مكتوبة للأطفال؛ راجعيها وقولي لي إذا تبين أعدّل شي.</p>
     ${P.confirm?`<div class="confirm"><span>متأكدة؟ بتنمسح نجوم ${kid.name} وتقدّمها.</span><button class="btn rose" id="doReset">نعم، امسحي</button><button class="btn ghost" id="noReset">لا</button></div>`
@@ -553,8 +708,8 @@ function parentHTML(){
 /* ---------- celebration ---------- */
 function celebrate(kid){
   const d=document.createElement("div"); d.className="celebrate";
-  d.innerHTML=`<div class="card"><img src="chars/yaddoah.png" alt="اليدّوه" style="height:150px;width:auto"><div class="gift">🎁</div><h2>مبروك يا ${kid.name}!</h2><p>خلّصتِ ${GOALS[S.kids[kid.id].goal].name} كامل. الجائزة الكبرى لكِ: الآيباد!</p><button class="btn sun big">الحمد لله 🤍</button></div>`;
-  d.querySelector("button").onclick=()=>d.remove(); document.body.appendChild(d);
+  d.innerHTML=`<div class="card"><div class="buddy" id="prizeb"><img src="chars/yaddoah.png" alt="اليدّوه" style="height:150px;width:auto"></div><div class="gift">🎁</div><h2>مبروك يا ${kid.name}!</h2><p>خلّصتِ ${GOALS[S.kids[kid.id].goal].name} كامل. الجائزة الكبرى لكِ: الآيباد!</p><button class="btn sun big">الحمد لله 🤍</button></div>`;
+  d.querySelector("button").onclick=()=>d.remove(); document.body.appendChild(d); speak("prize","prizeb");
 }
 
 /* ---------- events ---------- */
@@ -564,13 +719,13 @@ function bind(){
     const b=e.target.closest("button,.ayah"); if(!b) return;
     const d=b.dataset;
     if(d.home!==undefined) return go({name:"home"});
-    if(d.kid && b.classList.contains("kid")) return go({name:"child",kid:d.kid});
+    if(d.kid && (b.classList.contains("kid")||b.classList.contains("door"))) return go({name:"child",kid:d.kid});
     if(d.kid && b.classList.contains("back")) return go({name:"child",kid:d.kid});
     if(d.surah) { listenStop(); listen.ayah=1; listen.count=0; return go({name:"surah",kid:view.kid,n:+d.surah,tab:"listen"}) }
-    if(d.tab){ listenStop(); view.tab=d.tab; return render() }
+    if(d.tab){ listenStop(); view.tab=d.tab; render(); if(d.tab==="story") speak("story_intro","sbuddy"); return }
     if(d.rep){ listen.rep=+d.rep; document.querySelectorAll("[data-rep]").forEach(x=>x.setAttribute("aria-pressed",x===b)); return }
     if(b.id==="hideTxt"){ view.hide=!view.hide; return render() }
-    if(b.id==="lplay"){ if(listen.on){listenStop(); b.textContent="▶ ابدئي"; setMood("lbuddy",null,"وقفنا. اضغطي ابدئي نكمّل")} else {listen.on=true; listen.count=0; b.textContent="⏸ إيقاف"; listenStep()} return }
+    if(b.id==="lplay"){ if(listen.on){listenStop(); b.textContent="▶ ابدئي"; setMood("lbuddy",null,"وقفنا. اضغطي ابدئي نكمّل")} else {listen.on=true; listen.count=0; b.textContent="⏸ إيقاف"; speak("listen_start","lbuddy",()=>{ if(listen.on) listenStep() })} return }
     if(b.classList.contains("ayah")){ listenStop(); const a=+d.ayah; b.classList.add("on"); playSeg(view.n,a,()=>b.classList.remove("on")); return }
     if(d.daily) return startGame("mix",null,{daily:true});
     if(d.helper){ return pickSister() }
@@ -596,6 +751,9 @@ function bind(){
       if(!before && memCount(P.kid)>=goalTotal(P.kid)) celebrate(kidById(P.kid)); return }
     if(d.markall){ const st=S.kids[P.kid]; const before=memCount(P.kid)>=goalTotal(P.kid); GOALS[d.markall].list.forEach(n=>st.mem[n]=true); if(d.markall==="amma") st.mem[1]=true; save(); render();
       if(!before && memCount(P.kid)>=goalTotal(P.kid)) celebrate(kidById(P.kid)); return }
+    if(d.rec){ return toggleRecord(d.rec,b) }
+    if(d.vplay){ return speak(d.vplay,null) }
+    if(d.vdel){ vDel(d.vdel).then(()=>{VOICES.delete(d.vdel); render()}); return }
     if(b.id==="askReset"){ P.confirm=true; return render() }
     if(b.id==="noReset"){ P.confirm=false; return render() }
     if(b.id==="doReset"){ const k=kidById(P.kid); S.kids[P.kid]=freshKid(k); P.confirm=false; save(); toast("تم المسح"); return render() }
