@@ -45,3 +45,18 @@ const originalListenStep=listenStep;
 listenStep=function(){if(listen.on&&listen.ayah<=QURAN[view.n].v.length){const verse=document.querySelector('.focused-ayah[data-ayah]');if(verse){verse.dataset.ayah=String(listen.ayah);verse.innerHTML=esc(QURAN[view.n].v[listen.ayah-1])+` <span class="verse-marker">${ar(listen.ayah)}</span>`;verse.setAttribute('aria-label','استمعي للآية '+ar(listen.ayah));document.querySelectorAll('.ayah-navigation i').forEach((dot,i)=>dot.classList.toggle('selected',i===listen.ayah-1));document.querySelectorAll('[data-ayah-step]').forEach(btn=>{btn.disabled=+btn.dataset.ayahStep<0?listen.ayah===1:listen.ayah===QURAN[view.n].v.length});const h=document.querySelector('.mushaf-heading span:last-child');if(h)h.textContent='الآية '+ar(listen.ayah)+' من '+ar(QURAN[view.n].v.length)}}originalListenStep()};
 const componentGo=go;go=function(v){componentGo(v);if(v.name==='child'){const node=document.querySelector('.trail-stop.is-current');if(node)node.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}};
 render();
+
+/* ---------- child photos (chosen by the mother, stored only on this device) ---------- */
+const PHOTO_KEY='bustan-photos-v1';
+let PHOTOS={};try{PHOTOS=JSON.parse(localStorage.getItem(PHOTO_KEY)||'{}')||{}}catch(e){PHOTOS={}}
+function savePhotos(){try{localStorage.setItem(PHOTO_KEY,JSON.stringify(PHOTOS))}catch(e){toast('ما قدرنا نحفظ الصورة، المساحة ممتلئة')}}
+function photoAvatar(k,cls=''){const p=PHOTOS[k.id];return p?`<img class="kid-photo ${cls}" src="${p}" alt="">`:`<span class="kid-photo kid-emoji ${cls}" style="background:${k.tint}" aria-hidden="true">${k.emoji||'🌟'}</span>`}
+kidPortrait=function(k,cls=''){return `<span class="kid-portrait ${cls}" style="--kid-color:${k.tint}" aria-hidden="true">${photoAvatar(k)}</span>`};
+const baseHome=homeHTML;
+homeHTML=function(){return baseHome().replace(/(<button class="child-door door" data-kid="(\w+)"[^>]*>)/g,(m,open,id)=>open+`<span class="door-photo-wrap">${photoAvatar(kidById(id))}</span>`)};
+const baseParent=parentHTML;
+parentHTML=function(){const sec=`<section class="parent-section"><div class="parent-section-title"><div><h3>صور البنات</h3><p>اختاري صورة لكل بنت. تنحفظ على هذا الجهاز بس</p></div></div><div class="photo-settings">${KIDS.map(k=>`<div class="photo-row">${photoAvatar(k,'big')}<b>${k.name}</b><label class="quiet-button photo-pick">${PHOTOS[k.id]?'تغيير':'اختيار صورة'}<input type="file" accept="image/*" data-photo="${k.id}" hidden></label>${PHOTOS[k.id]?`<button class="quiet-button" data-photo-del="${k.id}">حذف</button>`:''}</div>`).join('')}</div></section>`;return baseParent().replace('<section class="parent-section parent-extras">',sec+'<section class="parent-section parent-extras">')};
+function resizePhoto(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,256,256);cb(c.toDataURL('image/jpeg',.85))};im.onerror=()=>toast('ما قدرنا نفتح الصورة');im.src=r.result};r.readAsDataURL(file)}
+const bindBeforePhotos=bind;
+bind=function(){bindBeforePhotos();const app=document.getElementById('app'),base=app.onclick;app.onclick=e=>{const b=e.target.closest('button');if(b&&b.dataset.photoDel){delete PHOTOS[b.dataset.photoDel];savePhotos();return render()}base?.(e)};app.onchange=e=>{const i=e.target;if(i.matches&&i.matches('input[data-photo]')&&i.files[0]){const id=i.dataset.photo;resizePhoto(i.files[0],url=>{PHOTOS[id]=url;savePhotos();toast('انحفظت الصورة ✓');render()})}}};
+render();
