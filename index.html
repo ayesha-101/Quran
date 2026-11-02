@@ -11,6 +11,7 @@
 <link rel="icon" href="/icons/icon-192.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
 <title>بستان القرآن</title>
+
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Baloo+Bhaijaan+2:wght@500;700;800&family=Tajawal:wght@400;500;700&display=swap">
@@ -240,6 +241,8 @@ h3{font-size:1.25rem;font-weight:700}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
+<link rel="stylesheet" href="fareej.css">
+<link rel="stylesheet" href="illustrated.css">
 </head>
 <body>
 <div id="app" class="wrap" dir="rtl" lang="ar"></div>
@@ -378,6 +381,7 @@ function render(){
   else if(view.name==="surah") app.innerHTML=surahHTML(view);
   else if(view.name==="game") app.innerHTML=gameHTML();
   else if(view.name==="parent") app.innerHTML=parentHTML();
+  app.dataset.view=view.name;
   bind();
 }
 
@@ -470,42 +474,41 @@ async function toggleRecord(id,btn){
 function homeHTML(){
   const total=KIDS.reduce((a,k)=>a+S.kids[k.id].stars,0);
   const palms=Math.floor(total/5);
-  return `
-  <section class="scene">
-    ${homeScene(palms)}
-    <h1 class="scene-title">بستان القرآن</h1>
-    <div class="scene-host">${buddy("yaddoah","هلا والله بعيالي! منو بتراجع اليوم؟",{id:"hbuddy"})}</div>
-  </section>
-  <section class="doors">${KIDS.map(k=>{const st=S.kids[k.id]; const pct=Math.round(memCount(k.id)/goalTotal(k.id)*100);
-    return `<button class="door" data-kid="${k.id}" aria-label="${k.name}">
-      <span class="door-face">${k.emoji}</span>
-      <span class="plaque">${k.name}</span>
-      <span class="door-meta">⭐ ${ar(st.stars)}</span>
-      <span class="door-bar" aria-hidden="true"><i style="width:${pct}%"></i></span></button>`}).join("")}
-  </section>
-  <p class="grove-note">🌴 نخل البيت: ${ar(palms)} ${palms?"":"· كل ٥ نجوم تزرع نخلة في الفريج"}</p>
-  <button class="btn soft parent-btn" id="parentHold"><span class="fill"></span><span>لوحة الأم · اضغطي مطوّلًا</span></button>`;
+  return `<section class="home-world">
+    <div class="world-scenery">${homeScene(palms)}</div>
+    <h1 class="wood-title">بستان القرآن</h1><p class="home-subtitle">حيّاكم في فريجنا</p>
+    <div class="home-welcome">${buddy("yaddoah","هلا بعيالي! اختاري بابج ونبدأ",{id:"hbuddy"})}</div>
+    <section class="doors" aria-label="اختاري بابج">${KIDS.map(k=>{
+      const st=S.kids[k.id];
+      return `<button class="door" data-kid="${k.id}" aria-label="باب ${k.name}، ${ar(st.stars)} نجمة"><span class="plaque">${k.name}</span><span class="door-meta">★ ${ar(st.stars)}</span></button>`;
+    }).join("")}</section>
+    <p class="home-footer">اختاري بابج</p>
+    <p class="grove-note">🌴 نخل العائلة: ${ar(palms)} · كل ٥ نجوم تزرع نخلة</p>
+    <button class="btn soft parent-btn" id="parentHold" aria-label="لوحة الأهل، اضغطي مطولًا أو Shift و Enter"><span class="fill"></span><span>للأهل · اضغطي مطوّلًا</span></button>
+  </section>`;
 }
 
 /* ---------- child: adventure map ---------- */
 function nextToLearn(kid){const st=S.kids[kid.id]; return kidList(kid).goal.find(n=>!st.mem[n])}
 const ZONES=[["الفريج","fareej"],["السوق","souq"],["البحر","sea"],["البر","barr"]];
 function mapHTML(kid){
-  const st=S.kids[kid.id]; const list=kidList(kid).goal; const N=list.length; const GAP=118, TOP=120;
+  const st=S.kids[kid.id]; const list=kidList(kid).goal; const N=list.length; const GAP=148, TOP=150;
   const H=TOP+N*GAP+150; const nxt=nextToLearn(kid);
   const pos=i=>({x:50+30*Math.sin(i*0.85), y:TOP+i*GAP});
   const zoneOf=i=>Math.min(3,Math.floor(i/N*4));
   let bands=""; for(let z=0;z<4;z++){const y0=z===0?0:TOP+Math.ceil(z*N/4)*GAP-GAP/2; const y1=z===3?H:TOP+Math.ceil((z+1)*N/4)*GAP-GAP/2;
     bands+=`<div class="zone zone-${ZONES[z][1]}" style="top:${y0}px;height:${y1-y0}px"><span class="zone-sign">${ZONES[z][0]}</span>${zoneDeco(z,y1-y0)}</div>`}
-  const pts=list.map((_,i)=>{const p=pos(i);return `${p.x},${p.y}`}).join(" ")+` 50,${TOP+N*GAP+40}`;
+  const points=list.map((_,i)=>pos(i));
+  points.push({x:50,y:TOP+N*GAP+40});
+  const path=points.reduce((d,p,i)=>i===0?`M ${p.x} ${p.y}`:d+` C ${points[i-1].x} ${(points[i-1].y+p.y)/2}, ${p.x} ${(points[i-1].y+p.y)/2}, ${p.x} ${p.y}`,"");
   const nodes=list.map((n,i)=>{const p=pos(i); const m=st.mem[n], w=weakCount(kid.id,n)>0, here=n===nxt;
     return `<button class="stone ${m?"mem":""} ${w?"weak":""} ${here?"here":""}" data-surah="${n}" style="left:${p.x}%;top:${p.y}px" aria-label="سورة ${sname(n)}">
-      ${here?`<span class="me">${kid.emoji}</span>`:""}<span class="dot">${m?"✓":ar(i+1)}</span><span class="lbl">${sname(n)}</span></button>`}).join("");
+      ${here?`<span class="me"><img src="chars/fatima.png" alt="${kid.name}"></span>`:""}<span class="dot">${m?"✓":ar(i+1)}</span><span class="lbl">${sname(n)}</span></button>`}).join("");
   const won=memCount(kid.id)>=goalTotal(kid.id);
   return `<section class="map" style="height:${H}px">${bands}
-    <svg class="trail" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="#FFF6E3" stroke-width="14" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/><polyline points="${pts}" fill="none" stroke="#C7A673" stroke-width="3" stroke-dasharray="2 12" vector-effect="non-scaling-stroke" stroke-linecap="round"/></svg>
+    <svg class="trail" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${path}" fill="none" stroke="#FFF6E3" stroke-width="64" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/><path d="${path}" fill="none" stroke="#C7A673" stroke-width="3" stroke-dasharray="2 12" vector-effect="non-scaling-stroke" stroke-linecap="round"/></svg>
     ${nodes}
-    <div class="chest ${won?"won":""}" style="top:${TOP+N*GAP+10}px"><span>🎁</span><b>${won?"الجائزة لج!":"الجائزة الكبرى"}</b></div>
+    <div class="chest ${won?"won":""}" style="top:${TOP+N*GAP+10}px"><span aria-hidden="true">🎁</span><b>${won?"الجائزة لج!":"الجائزة الكبرى"}</b><small>الآيباد</small></div>
   </section>`;
 }
 function zoneDeco(z,h){
@@ -538,6 +541,14 @@ function childHTML(id){
 }
 
 /* ---------- surah ---------- */
+function wordPicture(n,meaning){
+  if(/حجار|طين/.test(meaning)) return "🪨";
+  if(/جماعات/.test(meaning)&&n===105) return "🐦";
+  if(/الصبح/.test(meaning)) return "🌅";
+  if(/الليل/.test(meaning)) return "🌙";
+  if(/نهر/.test(meaning)) return "💧";
+  return "🌿";
+}
 function surahHTML(v){
   const kid=kidById(v.kid), st=S.kids[v.kid], n=v.n, q=QURAN[n];
   const tabs=[["listen","استمعي وردّدي"]]; if(STORIES[n]) tabs.push(["story","القصة والمعاني"]); if(st.level>=2) tabs.push(["play","العبي"]);
@@ -556,8 +567,8 @@ function surahHTML(v){
     <p class="note">اضغطي على أي آية لتسمعيها وحدها.</p>`;
   } else if(tab==="story"){
     const s=STORIES[n];
-    body=`${buddy("yaddo",`تعالي يا بنتي، أقولج قصة سورة ${q.name}`,{id:"sbuddy"})}<article class="story">${s.story.map(p=>`<p>${esc(p)}</p>`).join("")}
-      <h3>كلمات جديدة</h3><div class="words">${s.words.map(([w,m])=>`<div class="word"><div class="w">${esc(w)}</div><div>${esc(m)}</div></div>`).join("")}</div>
+    body=`<section class="majlis">${buddy("yaddo",`تعالوا نسمع حكاية سورة ${q.name}`,{id:"sbuddy"})}<div class="majlis-tools"><svg viewBox="0 0 120 110" aria-hidden="true"><path d="M45 32 Q20 63 39 86 L85 86 Q99 64 73 32Z" fill="#c79a45"/><path d="M78 44 Q115 27 103 71 L86 73" fill="none" stroke="#a77a30" stroke-width="8"/><path d="M38 44 L13 30 28 73 42 75" fill="#c79a45"/><path d="M39 31 Q59 14 79 31Z" fill="#9f7432"/><circle cx="59" cy="15" r="6" fill="#c79a45"/></svg><button class="btn soft" data-story-voice="1">▶ صوت يدو</button></div></section><article class="story">${s.story.map(p=>`<p>${esc(p)}</p>`).join("")}
+      <h3>كلمات جديدة</h3><div class="words">${s.words.map(([w,m])=>`<div class="word"><span class="word-icon" aria-hidden="true">${wordPicture(n,m)}</span><div class="mushaf"><div class="w">${esc(w)}</div></div><span>${esc(m)}</span></div>`).join("")}</div>
       <div class="lesson">🌱 ${esc(s.lesson)}</div></article>`;
   } else {
     const g=[];
@@ -633,14 +644,14 @@ function nextQ2(){
 }
 function gameHTML(){
   const c=G.cur, kid=kidById(G.kid), by=kidById(G.by), q=QURAN[c.n];
-  const dots=G.total>1?`<div class="progress-dots">${Array.from({length:G.total},(_,i)=>`<i class="${G.score[i]===true?"ok":G.score[i]===false?"no":""}"></i>`).join("")}</div>`:"";
+  const dots=G.total>1?`<div class="progress-dots">${Array.from({length:G.total},(_,i)=>`<i class="${i===G.i?"current ":""}${G.score[i]===true?"ok":G.score[i]===false?"no":""}"></i>`).join("")}</div>`:"";
   let body="";
-  if(c.t==="complete") body=`<div class="q">سورة ${q.name}: أكملي الآية</div><div class="big-ayah">${esc(c.start)} …</div>
+  if(c.t==="complete") body=`<div class="q">سورة ${q.name}: أكملي الآية</div><div class="big-ayah mushaf">${esc(c.start)} …</div>
     <div class="opts">${c.opts.map((o,i)=>`<button class="opt" data-opt="${i}">${esc(o)}</button>`).join("")}</div>`;
   else if(c.t==="which") body=`<div class="q">اسمعي الآية… من أي سورة؟</div><div class="row" style="justify-content:center"><button class="btn big sun" id="hear">🔊 اسمعي</button></div>
     <div class="opts">${c.opts.map((o,i)=>`<button class="opt name" data-opt="${i}">${sname(o)}</button>`).join("")}</div>`;
   else if(c.t==="recite") body=`<div class="q">${G.kid!==G.by?`${by.name} تسمّع لـ${kid.name} · `:""}سورة ${q.name}: اقرئي الآية اللي بعد</div>
-    <div class="big-ayah">${esc(q.v[c.a-1])}</div>
+    <div class="big-ayah mushaf">${esc(q.v[c.a-1])}</div>
     ${c.revealed?`<div class="mushaf"><div class="ayat" style="text-align:center">${esc(q.v[c.a]||"")}</div></div>
       <div class="row" style="justify-content:center"><button class="btn big" data-judge="1">✓ أحسنتِ</button><button class="btn big rose" data-judge="0">↺ نعيدها</button></div>`
      :`<div class="row" style="justify-content:center"><button class="btn big soft" id="reveal">شوفي الجواب واسمعيه</button></div>`}`;
@@ -651,7 +662,7 @@ function gameHTML(){
     <div class="opts">${c.opts.map((o,i)=>`<button class="opt name" data-opt="${i}">${sname(o)}</button>`).join("")}</div>`;
   return `<div class="row"><button class="back" id="gback">→ رجوع</button><span class="spacer"></span>${dots}<span class="stars">⭐ ${ar(S.kids[G.kid].stars)}</span></div>
   ${buddy("abdulrahman",G.i===0?"أتحداج! يلا نشوف 💪":"يلا السؤال اللي بعده!",{id:"gbuddy",small:true})}
-  <section class="play">${body}</section>`;
+  <section class="play ${["complete","order"].includes(c.t)?"mushaf-game":""}" aria-label="${["complete","order"].includes(c.t)?"بطاقة المصحف التعليمية":"اللعبة"}">${body}</section>`;
 }
 function answer(ok){
   const c=G.cur; G.score[G.i]=ok;
@@ -676,8 +687,10 @@ function parentHTML(){
   const id=P.kid, kid=kidById(id), st=S.kids[id];
   const list=[1].concat(AMMA).concat(TABARAK);
   const weakList=Object.entries(st.weak).sort((a,b)=>b[1]-a[1]).slice(0,12);
-  return `<div class="row"><button class="back" data-home>→ الرئيسية</button><span class="spacer"></span><h2>لوحة الأم</h2></div>
+  return `<div class="row"><button class="back" data-home>→ الرئيسية</button><span class="spacer"></span><h2>لوحة الأهل</h2></div>
+  <div class="parent-guide">${buddy("yaddoah","حياكم الله! نتابع حفظ عيالنا سوا",{small:true})}</div>
   <nav class="tabs">${KIDS.map(k=>`<button class="tab" data-pk="${k.id}" aria-selected="${k.id===id}">${k.emoji} ${k.name}</button>`).join("")}</nav>
+  <div class="parent-summary"><span><b>${ar(st.stars)} ★</b>نجمة</span><span><b>${ar(memCount(id))}</b>سورة محفوظة</span><span><b>${ar(st.level)}</b>المستوى</span></div>
   <section class="panel">
     <div class="field"><label>المستوى</label><div class="chips">${[1,2,3,4].map(l=>`<button class="chip" data-level="${l}" aria-pressed="${st.level===l}">${LEVELS[l]}</button>`).join("")}</div></div>
     <div class="field"><label>هدف الجائزة الكبرى</label><div class="chips">${Object.entries(GOALS).map(([g,o])=>`<button class="chip" data-goal="${g}" aria-pressed="${st.goal===g}">${o.name}</button>`).join("")}</div>
@@ -707,9 +720,19 @@ function parentHTML(){
 
 /* ---------- celebration ---------- */
 function celebrate(kid){
+  stopAudio();
   const d=document.createElement("div"); d.className="celebrate";
-  d.innerHTML=`<div class="card"><div class="buddy" id="prizeb"><img src="chars/yaddoah.png" alt="اليدّوه" style="height:150px;width:auto"></div><div class="gift">🎁</div><h2>مبروك يا ${kid.name}!</h2><p>خلّصتِ ${GOALS[S.kids[kid.id].goal].name} كامل. الجائزة الكبرى لكِ: الآيباد!</p><button class="btn sun big">الحمد لله 🤍</button></div>`;
-  d.querySelector("button").onclick=()=>d.remove(); document.body.appendChild(d); speak("prize","prizeb");
+  d.setAttribute("role","dialog"); d.setAttribute("aria-modal","true"); d.setAttribute("aria-label","شهادة إنجاز "+kid.name);
+  d.innerHTML=`<div class="card"><h2>كفو يا ${kid.name}!</h2><div class="confetti" aria-hidden="true">✦ ◆ ★ ◆ ✦</div>
+    <div class="prize-family">${buddy("yaddoah","تستاهلين يا الغالية!",{id:"prizeb"})}<img src="chars/fatima.png" alt="فاطمة تشجّع ${kid.name}"></div>
+    <article class="certificate"><div class="seal" aria-hidden="true">★ ★ ★</div><h2>شهادة إنجاز</h2><strong>${kid.name}</strong><p>أتممتِ حفظ ${GOALS[S.kids[kid.id].goal].name}</p><div class="seal" aria-hidden="true">🌴</div><p>مبارك يا بطلة</p><small>بستان القرآن</small></article>
+    <p>🎁 جائزتج الكبرى: الآيباد</p><div class="certificate-actions"><button class="btn" id="closePrize">نكمّل الرحلة</button><button class="btn soft" id="printPrize">احفظي الشهادة</button></div></div>`;
+  const previousFocus=document.activeElement;
+  const close=()=>{d.remove();if(previousFocus?.isConnected) previousFocus.focus()};
+  d.querySelector("#closePrize").onclick=close;
+  d.querySelector("#printPrize").onclick=()=>window.print();
+  d.onkeydown=e=>{if(e.key==="Escape")close();if(e.key==="Tab"){const buttons=[...d.querySelectorAll("button")];const i=buttons.indexOf(document.activeElement);e.preventDefault();buttons[(i+(e.shiftKey?-1:1)+buttons.length)%buttons.length].focus()}};
+  document.body.appendChild(d); d.querySelector("#closePrize").focus(); speak("prize","prizeb");
 }
 
 /* ---------- events ---------- */
@@ -722,6 +745,7 @@ function bind(){
     if(d.kid && (b.classList.contains("kid")||b.classList.contains("door"))) return go({name:"child",kid:d.kid});
     if(d.kid && b.classList.contains("back")) return go({name:"child",kid:d.kid});
     if(d.surah) { listenStop(); listen.ayah=1; listen.count=0; return go({name:"surah",kid:view.kid,n:+d.surah,tab:"listen"}) }
+    if(d.storyVoice){ if(!VOICES.has("story_intro")) return toast("سجّلي صوت يدو من لوحة الأهل أولًا"); return speak("story_intro","sbuddy") }
     if(d.tab){ listenStop(); view.tab=d.tab; render(); if(d.tab==="story") speak("story_intro","sbuddy"); return }
     if(d.rep){ listen.rep=+d.rep; document.querySelectorAll("[data-rep]").forEach(x=>x.setAttribute("aria-pressed",x===b)); return }
     if(b.id==="hideTxt"){ view.hide=!view.hide; return render() }
@@ -775,6 +799,7 @@ function pickSister(){
 render();
 </script>
 
+<script src="illustrated.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
