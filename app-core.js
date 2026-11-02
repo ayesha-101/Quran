@@ -242,7 +242,7 @@ function bind(){
       if(!ok){ const ri=c.opts.findIndex(x=>c.t==="which"?x===c.n:x===c.right); app.querySelector(`[data-opt="${ri}"]`).classList.add("ok") }
       c.answered=true; if(c.t==="complete") c.len=playSeg(c.n,c.a,()=>{}); return answer(ok) }
     if(d.ord){ const c=G.cur; const i=+d.ord; const want=c.ids[c.placed.length];
-      if(i===want){ setMood("gbuddy","cheer","صح! كمّلي 👏"); c.placed.push(i); playSeg(c.n,i,()=>{}); if(c.placed.length===c.ids.length){ render(); G.score[0]=true; setTimeout(finishGame,1600) } else render() }
+      if(i===want){ setMood("gbuddy","cheer","صح! كمّلي 👏"); c.placed.push(i); playSeg(c.n,i,()=>{}); if(c.placed.length===c.ids.length){ render(); G.score[0]=true; setTimeout(()=>{if(G)finishGame()},1600) } else render() }
       else { setMood("gbuddy","think","أوه! مو هذي، شوفي مرة ثانية"); c.mistakes++; b.classList.remove("no"); void b.offsetWidth; b.classList.add("no"); const w=S.kids[G.kid].weak,k=c.n+":"+want; w[k]=(w[k]||0)+1; save() } return }
     // parent
     if(d.pk){ P.kid=d.pk; P.confirm=false; return render() }
